@@ -8,21 +8,26 @@ const path = require('path');
 
 const port = process.env.PORT || 5000;
 
-app.use(cors());
 dotenv.config();
 
-// app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static(path.join(__dirname, 'src')));
-app.use(express.json({extended:false}));
+app.use(express.json());
+-app.use(express.urlencoded({ extended: false }));
 require('./user/route')(app);
 require('./admin/routes')(app);
 require('./product/route')(app);
 Util = require('./shared/util');
 Config = require('./config');
 connectDB();
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'build', 'index.html'))
-// });
+
+app.get("/", (req, res) => {
+    res.send("Home page");
+  });
+
+app.use(
+    cors({
+      origin: ["http://localhost:3000", "https://luxe-watches.onrender.com"],
+    })
+  );
 
 server.listen(port, () => {
     console.log('Application running on port no', server.address().port);
