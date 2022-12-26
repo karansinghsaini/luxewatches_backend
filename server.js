@@ -8,6 +8,13 @@ const path = require('path');
 
 const port = process.env.PORT || 5000;
 
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://luxe-watches.onrender.com"],
+    credentials: true
+  })
+);
+
 dotenv.config();
 
 app.use(express.json());
@@ -23,12 +30,7 @@ app.get("/", (req, res) => {
     res.send("Home page");
   });
 
-app.use(
-    cors({
-      origin: ["http://localhost:3000", "https://luxe-watches.onrender.com"],
-      credentials: true
-    })
-  );
+
 
 
 server.listen(port, () => {
